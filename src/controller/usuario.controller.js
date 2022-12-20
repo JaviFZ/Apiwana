@@ -1,4 +1,4 @@
-const connection = require("../database")
+const connection = require("../dataBase")
 
 
 function postRegistro (request, response)
