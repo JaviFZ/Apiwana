@@ -6,4 +6,4 @@ const app = require("./app")
 //         console.log("Server listen on port " + app.get("port"));
 //     });
  
-app.listen(process.env.PORT || 7872)
+app.listen(process.env.PORT || 3000)

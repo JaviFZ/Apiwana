@@ -8,7 +8,7 @@ const {errorHandling} = require("./error/errorHandling")
 
 const app = express();
 
-app.set("port", process.env.PORT || 7872)
+app.set("port", process.env.PORT || 3000)
 
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
