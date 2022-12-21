@@ -47,17 +47,17 @@ function postLogin(request, response) {
 function putPerfil(request, response) {
     console.log(request.body);
 
-    let params = [request.body.nombre, request.body.email, request.body.apellidos, request.body.direccion, request.body.telefono, request.body.genero, request.body.fechaDeNacimiento, request.body.foto, request.body.sobreMi, request.body.id_usuario]
+    let params = [request.body.email, request.body.nombre, request.body.apellidos, request.body.direccion, request.body.telefono, request.body.genero, request.body.fechaDeNacimiento, request.body.foto, request.body.sobreMi, request.body.id_usuario]
 
-    let sql = "UPDATE libro SET usuarios = COALESCE(?, email) , " +
+    let sql = "UPDATE usuarios SET email = COALESCE(?, email) , " +
         "nombre = COALESCE(?, nombre) , " +
         "apellidos = COALESCE(?, apellidos) , " +
         "direccion = COALESCE(?, direccion) , " +
         "telefono = COALESCE(?, telefono) , " +
         "genero = COALESCE(?, genero) , " +
         "fechaDeNacimiento = COALESCE(?, fechaDeNacimiento) , " +
-        "sobreMi = COALESCE(?, sobreMi) , " +
-        "foto = COALESCE(?, foto)  WHERE id_usuario = ?";
+        "foto = COALESCE(?, foto) , " +
+        "sobreMi = COALESCE(?, sobreMi)  WHERE id_usuario = ?";
 
     console.log(sql);
 
