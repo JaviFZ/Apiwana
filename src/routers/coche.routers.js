@@ -5,10 +5,10 @@ const cocheCtrl = require("../controller/coche.controller")
 
 
 
-router.post("/Coche", cocheCtrl.postAñadirCoche);
+router.post("/coche", cocheCtrl.postCoche);
 
 
-router.delete("/Coche", cocheCtrl.deleteCoche);
+router.delete("/coche", cocheCtrl.deleteCoche);
 
 
 

@@ -4,7 +4,7 @@ const connection = require("../dataBase")
 
 const postCoche = (request, response) => {
     console.log(request.body);
-    let sql = "INSERT INTO usuario (nombreCoche, marca, modelo, matricula, combustible, color, fumar, mascotas)" +
+    let sql = "INSERT INTO railway.coche (nombreCoche, marca, modelo, matricula, combustible, color, fumar, mascotas)" +
                 " VALUES ('" + request.body.nombreCoche + "', '" +
                                 request.body.marca + "' , '" +
                                 request.body.modelo + "' , '" +
