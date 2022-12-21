@@ -3,11 +3,11 @@ const connection = require("../dataBase")
 
 function postRegistro(request, response) {
     console.log(request.body);
-    let sql = "INSERT INTO usuario (nombre, apellidos , correo, foto, password)" +
+    let sql = "INSERT INTO usuarios (nombre, apellidos , fechaDeNacimiento, email, password)" +
         " VALUES ('" + request.body.nombre + "', '" +
         request.body.apellidos + "' , '" +
-        request.body.correo + "' , '" +
-        request.body.foto + "' , '" +
+        request.body.fechaDeNacimiento + "' , '" +
+        request.body.email + "' , '" +
         request.body.password + "')";
 
     console.log(sql);
@@ -26,7 +26,7 @@ function postRegistro(request, response) {
 }
 
 function postLogin(request, response) {
-    let sql = `SELECT id_usuario, nombre, apellidos, correo, foto FROM usuario WHERE correo='${request.body.correo}' AND password='${request.body.password}'`;
+    let sql = `SELECT id_usuario FROM usuarios WHERE email='${request.body.email}' AND password='${request.body.password}'`;
 
 
     connection.query(sql, function (err, result) {
