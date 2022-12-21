@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/apiRest.js"
-
   },
   "repository": {
     "type": "git",
