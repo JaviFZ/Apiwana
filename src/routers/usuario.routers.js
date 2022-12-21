@@ -10,6 +10,8 @@ router.post("/registro", usuarioCtrl.postRegistro);
 
 router.post("/login", usuarioCtrl.postLogin);
 
+router.put("/editarPerfil", usuarioCtrl.putPerfil);
+
 
 
 
