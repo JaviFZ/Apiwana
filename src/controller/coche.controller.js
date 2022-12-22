@@ -1,5 +1,19 @@
 const connection = require("../dataBase")
 
+const getCoche = (request, response) => {
+      let  coches = "SELECT * FROM coche WHERE coche.id_conductor=" + request.query.id_conductor;
+        console.log(coches);  
+        connection.query(coches, function (err, result) {
+            if (err) 
+                console.log(err);
+            else {
+                console.log(result)
+                response.send(result);
+            }
+        })
+    }
+
+
 
 
 const postCoche = (request, response) => {
@@ -46,4 +60,4 @@ const deleteCoche = (request, response) =>{
     })
 }
 
-module.exports = {postCoche, deleteCoche};
+module.exports = {getCoche, postCoche, deleteCoche};
