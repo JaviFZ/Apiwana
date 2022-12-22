@@ -61,13 +61,14 @@ function putPerfil(request, response) {
 
     console.log(sql);
 
-    connection.query(sql, params), function (err, result) {
+    connection.query(sql, params, function (err, result) {
         if (err)
             console.log(err);
         else {
+            console.log(result);
             response.send(result);
         }
-    }
+    })
 }
 
 module.exports = { postRegistro, postLogin , putPerfil };
