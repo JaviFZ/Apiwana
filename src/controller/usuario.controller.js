@@ -71,4 +71,21 @@ function putPerfil(request, response) {
     })
 }
 
-module.exports = { postRegistro, postLogin , putPerfil };
+
+function getPerfil(request, response) {
+    console.log(request.query);
+
+    if (request.query.id_usuario) {
+        let sql = `SELECT * FROM railway.usuarios WHERE id_usuario='${request.query.id_usuario}'`
+        connection.query(sql, function (err, result) {
+            if (err)
+                console.log(err);
+            else {
+                response.send(result);
+
+            }
+        })
+    }
+}
+
+module.exports = { postRegistro, postLogin, putPerfil, getPerfil };

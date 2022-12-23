@@ -12,6 +12,8 @@ router.post("/login", usuarioCtrl.postLogin);
 
 router.put("/editarPerfil", usuarioCtrl.putPerfil);
 
+router.get("/perfil", usuarioCtrl.getPerfil);
+
 
 
 

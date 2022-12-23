@@ -18,7 +18,7 @@ const getCoche = (request, response) => {
 
 const postCoche = (request, response) => {
     console.log(request.body);
-    let sql = "INSERT INTO railway.coche (nombreCoche, marca, modelo, matricula, combustible, color, fumar, mascotas)" +
+    let sql = "INSERT INTO railway.coche (nombreCoche, marca, modelo, matricula, combustible, color, fumar, mascotas, id_conductor)" +
                 " VALUES ('" + request.body.nombreCoche + "', '" +
                                 request.body.marca + "' , '" +
                                 request.body.modelo + "' , '" +
@@ -26,7 +26,8 @@ const postCoche = (request, response) => {
                                 request.body.combustible + "' , '" +
                                 request.body.color + "' , '" +
                                 request.body.fumar + "' , '" +
-                                request.body.mascotas + "')";
+                                request.body.mascotas + "' , '" +
+                                request.body.id_conductor + "')";
 
     console.log(sql);
     connection.query(sql, function (err, result) 
