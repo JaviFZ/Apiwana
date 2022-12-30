@@ -23,7 +23,7 @@ function getViaje(request,response){
     let sql = `SELECT origen,destino,fecha,precio,pasajeros FROM usuarios 
     JOIN opiniones ON (usuarios.id_usuario = opiniones.id_pasajero) 
     JOIN viaje ON (opiniones.id_viaje = viaje.id_viaje) 
-    WHERE (viaje.codigoPostalOrigen='${request.query.codPostalOr}' AND viaje.CodigoPostalDestino='${request.query.codPostalDes}' 
+    WHERE (viaje.codigoPostalOrigen='${request.query.codigoPostalOrigen}' AND viaje.CodigoPostalDestino='${request.query.codigoPostalDestino}' 
     AND viaje.fecha='${request.query.fecha}')`;
 
     connection.query(sql,function(err, result){
