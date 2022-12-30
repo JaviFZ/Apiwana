@@ -2,7 +2,7 @@ const connection = require("../dataBase");
 
 function postViaje(request,response){
     console.log(request.body);
-    let sql = "INSERT INTO viaje (origen,destino,fecha,precio,id_coche,habitual,pasajeros,hora,activo,id_usuarios,codigoPostalOrigen,codigoPostalDestino)" + `VALUES('${request.body.origen}','${request.body.destino}','${request.body.fecha}','${request.body.precio}','${request.body.id_coche}','${request.body.habitual}','${request.body.pasajeros}','${request.body.hora}',true, ${request.query.id_usuarios}, '${request.body.codPostalOr}', '${request.body.codPostalDes}')`;
+    let sql = "INSERT INTO viaje (origen,destino,fecha,precio,id_coche,habitual,pasajeros,hora,activo,codigoPostalOrigen,codigoPostalDestino,id_usuarios)" + `VALUES('${request.body.origen}','${request.body.destino}','${request.body.fecha}','${request.body.precio}','${request.body.id_coche}','${request.body.habitual}','${request.body.pasajeros}','${request.body.hora}',true,'${request.body.codPostalOr}','${request.body.codPostalDes}', ${request.query.id_usuarios})`;
     connection.query(sql,function(err, result){
         if(err){
             console.log(err);
