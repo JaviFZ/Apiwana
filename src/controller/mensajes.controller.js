@@ -16,7 +16,7 @@ const connection = require("../dataBase")
 
 
 
-const postMenaje = (request, response) => {
+const postMensaje = (request, response) => {
     console.log(request.body);
     let sql = "INSERT INTO railway.mensajes (id_chat, id_usuario, fecha, mensaje)" +
                 " VALUES ('" + request.body.id_chat + "', '" +
@@ -43,6 +43,4 @@ const postMenaje = (request, response) => {
 }
 
 
-
-module.exports = {getMensaje, postMenaje};
-module.exports = {getMensaje, postMenaje};
+module.exports = {postMensaje};

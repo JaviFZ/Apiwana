@@ -5,7 +5,7 @@ const mensajesCtrl = require("../controller/mensajes.controller")
 
 
 
-router.get("/mensaje", mensajesCtrl.getMesajes);
+// router.get("/mensaje", mensajesCtrl.getMesajes);
 router.post("/mensaje", mensajesCtrl.postMensaje);
 
 
