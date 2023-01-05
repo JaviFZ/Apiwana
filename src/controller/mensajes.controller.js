@@ -1,17 +1,20 @@
-const connection = require("../dataBase")
+const connection = require("../dataBase");
+const { get } = require("../routers/usuario.routers");
 
-// const getMensaje = (request, response) => {
-//       let  mensajes = "SELECT * FROM mensajes WHERE mensajes.id_mensaje=" + request.query.id_mensaje;
-//         console.log(mensajes);  
-//         connection.query(mensajes, function (err, result) {
-//             if (err) 
-//                 console.log(err);
-//             else {
-//                 console.log(result)
-//                 response.send(result);
-//             }
-//         })
-//     }
+
+ const getMensaje = (mensajeId) => {
+    return new Promise(function(resolve, reject) {
+        let  mensaje = "SELECT * FROM mensajes WHERE mensajes.id_mensaje=" + mensajeId;
+        console.log(mensaje);  
+        connection.query(mensaje, function (err, result) {
+            if (err) 
+                reject(err);
+            else {
+                resolve(result);
+            }
+        })
+    });
+     }
 
 
 
@@ -25,22 +28,20 @@ const postMensaje = (request, response) => {
                                 request.body.mensaje + "')";
 
     console.log(sql);
-    connection.query(sql, function (err, result) 
+    connection.query(sql, async function (err, result) 
     {
         if(err)
             console.log(err);
-        else
-        {
-            console.log(result);
-            if (result.insertId)
-                response.send(String(result.insertId));
-            else
-            {
-                response.send("-1");
+        else {
+            try {
+                const mensaje = await getMensaje(result.insertId)
+                response.send(mensaje);
+            } catch (err) {
+                console.log(err)
             }
         }        
     })
 }
 
 
-module.exports = {postMensaje};
+module.exports = {getMensaje, postMensaje};
