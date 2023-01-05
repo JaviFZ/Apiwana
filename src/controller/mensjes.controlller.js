@@ -22,7 +22,7 @@ const postMenaje = (request, response) => {
                 " VALUES ('" + request.body.id_chat + "', '" +
                                 request.body.id_usuario + "' , '" +
                                 request.body.fecha + "' , '" +
-                                request.body.id_mensaje + "')";
+                                request.body.mensaje + "')";
 
     console.log(sql);
     connection.query(sql, function (err, result) 

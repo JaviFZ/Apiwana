@@ -76,16 +76,16 @@ function getPerfil(request, response) {
     console.log(request.query);
 
     if (request.query.id_usuario) {
-        let sql = `SELECT * FROM railway.usuarios WHERE id_usuario='${request.query.id_usuario}'`
-        connection.query(sql, function (err, result) {
-            if (err)
-                console.log(err);
-            else {
-                response.send(result);
-
-            }
-        })
+        response.send(getUsuario(request.query.id_usuario))
     }
 }
 
-module.exports = { postRegistro, postLogin, putPerfil, getPerfil };
+const getUsuario = (id_usuario)=>{
+    let sql = `SELECT * FROM railway.usuarios WHERE id_usuario='${id_usuario}'`
+    connection.query(sql, function (err, result) {
+        if (err) console.log(err);
+        else return result;
+    });
+} 
+
+module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario };
