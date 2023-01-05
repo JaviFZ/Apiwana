@@ -8,7 +8,7 @@ const getChats = async (request, response) => {
         const chatsData = await getChatsData(request.query.id_usuario);
         for (let i = 0; i<chatsData.length; i++) {
             const ultimoMensaje = await mensajes.getUltimoMensaje(chatsData[i].id_chat)
-            chatsData[i] = { ...chat, ultimoMensaje };
+            chatsData[i] = { ...chatsData[i], ultimoMensaje };
         }
         response.send(chatsData)
     } catch (err) {
