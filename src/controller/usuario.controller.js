@@ -26,7 +26,7 @@ function postRegistro(request, response) {
 }
 
 function postLogin(request, response) {
-    let sql = `SELECT id_usuario FROM usuarios WHERE email='${request.body.email}' AND password='${request.body.password}'`;
+    let sql = `SELECT * FROM usuarios WHERE email='${request.body.email}' AND password='${request.body.password}'`;
 
 
     connection.query(sql, function (err, result) {
@@ -76,16 +76,20 @@ function getPerfil(request, response) {
     console.log(request.query);
 
     if (request.query.id_usuario) {
-        response.send(getUsuario(request.query.id_usuario))
+        getUsuario(request.query.id_usuario)
+        .then((result) => response.send(result))
+        .catch(err => console.log(err));
     }
 }
 
-const getUsuario = (id_usuario)=>{
-    let sql = `SELECT * FROM railway.usuarios WHERE id_usuario='${id_usuario}'`
-    connection.query(sql, function (err, result) {
-        if (err) console.log(err);
-        else return result;
-    });
+const getUsuario = (id_usuario) => {
+    return new Promise(function(resolve, reject) {
+        let sql = `SELECT * FROM railway.usuarios WHERE id_usuario=${id_usuario}`;
+        connection.query(sql, function (err, result) {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    })
 } 
 
 module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario };

@@ -18,45 +18,64 @@ const getChats = (request, response) => {
 const getChat = (request, response) => {
     let chat = `SELECT * FROM chats WHERE (chats.id_usuario1=${request.body.id_usuario1} OR chats.id_usuario1=${request.body.id_usuario2}) AND  (chats.id_usuario2=${request.body.id_usuario1} OR chats.id_usuario2=${request.body.id_usuario2})  AND chats.id_viaje=${request.body.id_viaje}`;
     console.log(chat);
-    connection.query(chat, function (err, result) {
+    connection.query(chat, async function (err, result) {
         if (err)
             console.log(err);
         else {
-
             if (result.length > 0) {
-                response.send(getChatData(result[0].idChat, request.body.id_usuario2));
+                try {
+                    const chatData = await getChatData(result[0].idChat, request.body.id_usuario2)
+                    response.send(chatData);
+                } catch (err) {
+                    console.log(err)
+                }
             } else {
-               const nuevochat = crearChat(request.body.id_viaje, request.body.id_usuario1, request.body.id_usuario2)
-               response.send(getChatData(nuevochat.insertId, request.body.id_usuario2));
+                try {
+                    const nuevoChat = await crearChat(request.body.id_viaje, request.body.id_usuario1, request.body.id_usuario2);
+                    const chatData = await getChatData(nuevoChat.insertId, request.body.id_usuario2);
+                    response.send(chatData);
+                } catch (err) {
+                    console.log(err);
+                }
             }
         }
     })
 }
 
 const crearChat = (id_usuario1, id_usuario2, id_viaje) => {
-    let sql = "INSERT INTO railway.chats (id_viaje, id_usuario1, id_usuario2)" +
+    return new Promise(function(resolve, reject) {
+        let sql = "INSERT INTO railway.chats (id_viaje, id_usuario1, id_usuario2)" +
         " VALUES ('" + id_viaje + "', '" +
         id_usuario1 + "' , '" +
         id_usuario2 + "')";
     connection.query(sql, (err, result) => {
-        if (err) console.log(err);
-        else return result;
+        if (err) reject(err);
+        else resolve(result);
     });
+    })
+    
 }
 
 const getChatData = (id_chat, idUsuario2) => {
-    const mensajes = getChatMensajes(id_chat);
-    const usuario2 = usuario.getUsuario(idUsuario2)[0];
-
-    return { id_chat, mensajes, usuario2 };
+    return new Promise(async function(resolve, reject) {
+        try {
+            const mensajes = await getChatMensajes(id_chat);
+            const usuario2 = await usuario.getUsuario(idUsuario2);
+            resolve({ id_chat, mensajes, usuario2 });
+        } catch (err) {
+            reject(err);
+        }
+    });
 }
 
 const getChatMensajes = (idChat) => {
-    let mensajes = `SELECT * FROM mensajes WHERE mensajes.id_chat=${idChat}`;
-    connection.query(mensajes, (err, result) => {
-        if (err) console.log(err);
-        else return result;
-    });
+    return new Promise(function(resolve, reject) {
+        let mensajes = `SELECT * FROM mensajes WHERE mensajes.id_chat=${idChat}`;
+        connection.query(mensajes, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+        });
+    })
 }
 
 
