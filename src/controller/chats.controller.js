@@ -6,9 +6,9 @@ const mensajes = require("./mensajes.controller")
 const getChats = async (request, response) => {
     try {
         const chatsData = await getChatsData(request.query.id_usuario);
-        for (let chat of chatsData) {
-            const ultimoMensaje = await mensajes.getUltimoMensaje(chat.id_chat)
-            chat = { ...chat, ultimoMensaje };
+        for (let i = 0; i<chatsData.length; i++) {
+            const ultimoMensaje = await mensajes.getUltimoMensaje(chatsData[i].id_chat)
+            chatsData[i] = { ...chat, ultimoMensaje };
         }
         response.send(chatsData)
     } catch (err) {
