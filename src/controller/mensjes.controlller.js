@@ -45,3 +45,4 @@ const postMenaje = (request, response) => {
 
 
 module.exports = {getMensaje, postMenaje};
+module.exports = {getMensaje, postMenaje};
