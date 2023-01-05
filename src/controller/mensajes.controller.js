@@ -17,6 +17,20 @@ const { get } = require("../routers/usuario.routers");
      }
 
 
+const getUltimoMensaje = (id_chat) => {
+    return new Promise(function(resolve, reject) {
+        let  mensaje = "SELECT * FROM mensajes WHERE mensajes.id_chat=" + id_chat;
+        console.log(mensaje);  
+        connection.query(mensaje, function (err, result) {
+            if (err) 
+                reject(err);
+            else {
+                resolve(result.pop());
+            }
+        })
+    });
+}
+
 
 
 const postMensaje = (request, response) => {
@@ -44,4 +58,4 @@ const postMensaje = (request, response) => {
 }
 
 
-module.exports = {getMensaje, postMensaje};
+module.exports = {getUltimoMensaje, getMensaje, postMensaje};

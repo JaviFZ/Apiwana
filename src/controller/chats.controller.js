@@ -1,17 +1,28 @@
 const connection = require("../dataBase");
 const usuario = require("./usuario.controller")
+const mensajes = require("./mensajes.controller")
 
 
-const getChats = (request, response) => {
-    let chats = "SELECT * FROM chats WHERE chats.id_usuario1=" + request.query.id_usuario1;
-    console.log(chats);
-    connection.query(chats, function (err, result) {
-        if (err)
-            console.log(err);
-        else {
-            console.log(result)
-            response.send(result);
+const getChats = async (request, response) => {
+    try {
+        const chatsData = await getChatsData(request.query.id_usuario);
+        for (let chat of chatsData) {
+            const ultimoMensaje = await mensajes.getUltimoMensaje(chat.id_chat)
+            chat = { ...chat, ultimoMensaje };
         }
+        response.send(chatsData)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+const getChatsData = (id_usuario) => {
+    return new Promise(function(resolve, reject) {
+        const viaje = "SELECT chats.id_chat, viaje.origen, viaje.destino, chats.id_usuario1, chats.id_usuario2, usuarios.nombre, usuarios.foto  FROM railway.chats JOIN viaje ON (chats.id_viaje=viaje.id_viaje) JOIN usuarios ON (chats.id_usuario2=usuarios.id_usuario) WHERE chats.id_usuario1=" + id_usuario
+        connection.query(viaje, (err, result) => {
+            if (err) reject(err)
+            else resolve (result)
+        })
     })
 }
 
