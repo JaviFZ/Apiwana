@@ -24,14 +24,14 @@ const getChat = (request, response) => {
         else {
             if (result.length > 0) {
                 try {
-                    const chatData = await getChatData(result[0].idChat, request.body.id_usuario2)
+                    const chatData = await getChatData(result[0].id_chat, request.body.id_usuario2)
                     response.send(chatData);
                 } catch (err) {
                     console.log(err)
                 }
             } else {
                 try {
-                    const nuevoChat = await crearChat(request.body.id_viaje, request.body.id_usuario1, request.body.id_usuario2);
+                    const nuevoChat = await crearChat(request.body.id_usuario1, request.body.id_usuario2, request.body.id_viaje);
                     const chatData = await getChatData(nuevoChat.insertId, request.body.id_usuario2);
                     response.send(chatData);
                 } catch (err) {
@@ -61,7 +61,7 @@ const getChatData = (id_chat, idUsuario2) => {
         try {
             const mensajes = await getChatMensajes(id_chat);
             const usuario2 = await usuario.getUsuario(idUsuario2);
-            resolve({ id_chat, mensajes, usuario2 });
+            resolve({ id_chat, mensajes, usuario2: usuario2[0] });
         } catch (err) {
             reject(err);
         }
