@@ -7,12 +7,8 @@ const getChats = async (request, response) => {
     try {
         const chatsData = await getChatsData(request.query.id_usuario);
         for (let i = 0; i<chatsData.length; i++) {
-            let otroUsuario;
-            if (chatsData[i].id_usuario1 === request.query.id_usuario) {
-                otroUsuario = await usuario.getUsuario(chatsData[i].id_usuario2)
-            } else  {
-                otroUsuario = await usuario.getUsuario(chatsData[i].id_usuario1)
-            }
+            let idOtroUsuario = chatsData[i].id_usuario1 === request.query.id_usuario ? chatsData[i].id_usuario2 : chatsData[i].id_usuario1;
+            const otroUsuario = await usuario.getUsuario(idOtroUsuario)
             const ultimoMensaje = await mensajes.getUltimoMensaje(chatsData[i].id_chat)
             chatsData[i] = { ...chatsData[i], nombre: otroUsuario.nombre, apellidos: otroUsuario.apellidos, foto: otroUsuario.foto, ultimoMensaje };
         }
