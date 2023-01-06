@@ -7,8 +7,14 @@ const getChats = async (request, response) => {
     try {
         const chatsData = await getChatsData(request.query.id_usuario);
         for (let i = 0; i<chatsData.length; i++) {
+            let otroUsuario;
+            if (chatsData[i].id_usuario1 === request.query.id_usuario) {
+                otroUsuario = await usuario.getUsuario(chatsData[i].id_usuario2)
+            } else  {
+                otroUsuario = await usuario.getUsuario(chatsData[i].id_usuario1)
+            }
             const ultimoMensaje = await mensajes.getUltimoMensaje(chatsData[i].id_chat)
-            chatsData[i] = { ...chatsData[i], ultimoMensaje };
+            chatsData[i] = { ...chatsData[i], nombre: otroUsuario.nombre, apellidos: otroUsuario.apellidos, foto: otroUsuario.foto, ultimoMensaje };
         }
         response.send(chatsData)
     } catch (err) {
@@ -35,7 +41,8 @@ const getChat = (request, response) => {
         else {
             if (result.length > 0) {
                 try {
-                    const chatData = await getChatData(result[0].id_chat, request.body.id_usuario2)
+                    const idOtroUsuario = request.body.id_usuario1 === request.body.usuario_actual ? request.body.id_usuario2 :request.body.id_usuario1;
+                    const chatData = await getChatData(result[0].id_chat, idOtroUsuario)
                     response.send(chatData);
                 } catch (err) {
                     console.log(err)
@@ -67,12 +74,12 @@ const crearChat = (id_usuario1, id_usuario2, id_viaje) => {
     
 }
 
-const getChatData = (id_chat, idUsuario2) => {
+const getChatData = (id_chat, idOtroUsuario) => {
     return new Promise(async function(resolve, reject) {
         try {
             const mensajes = await getChatMensajes(id_chat);
-            const usuario2 = await usuario.getUsuario(idUsuario2);
-            resolve({ id_chat, mensajes, usuario2: usuario2[0] });
+            const otroUsuario = await usuario.getUsuario(idOtroUsuario);
+            resolve({ id_chat, mensajes, otroUsuario: otroUsuario[0] });
         } catch (err) {
             reject(err);
         }
