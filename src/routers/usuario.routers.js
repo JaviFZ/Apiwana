@@ -7,7 +7,7 @@ const usuarioCtrl = require("../controller/usuario.controller")
 
 router.post("/registro", usuarioCtrl.postRegistro);
 router.post("/login", usuarioCtrl.postLogin);
-router.post("/escribir-opinion", usuarioCtrl.postMediaPuntos)
+// router.post("/escribir-opinion", usuarioCtrl.postMediaPuntos)
 router.post("/escribir-opinion", usuarioCtrl.postOpinion)
 
 
