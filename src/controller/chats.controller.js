@@ -7,7 +7,7 @@ const getChats = async (request, response) => {
     try {
         const chatsData = await getChatsData(request.query.id_usuario);
         for (let i = 0; i<chatsData.length; i++) {
-            let idOtroUsuario = chatsData[i].id_usuario1 === request.query.id_usuario ? chatsData[i].id_usuario2 : chatsData[i].id_usuario1;
+            let idOtroUsuario = chatsData[i].id_usuario1 === parseInt(request.query.id_usuario) ? chatsData[i].id_usuario2 : chatsData[i].id_usuario1;
             const otroUsuario = await usuario.getUsuario(idOtroUsuario)
             const ultimoMensaje = await mensajes.getUltimoMensaje(chatsData[i].id_chat)
             chatsData[i] = { ...chatsData[i], nombre: otroUsuario[0].nombre, apellidos: otroUsuario[0].apellidos, foto: otroUsuario[0].foto, ultimoMensaje };
