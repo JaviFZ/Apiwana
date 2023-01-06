@@ -24,7 +24,7 @@ const getChats = async (request, response) => {
 
 const getChatsData = (id_usuario) => {
     return new Promise(function(resolve, reject) {
-        const viaje = "SELECT chats.id_chat, chats.id_viaje, viaje.origen, viaje.destino, viaje.fecha, chats.id_usuario1, chats.id_usuario2, usuarios.nombre, usuarios.foto  FROM railway.chats JOIN viaje ON (chats.id_viaje=viaje.id_viaje) JOIN usuarios ON (chats.id_usuario2=usuarios.id_usuario) WHERE chats.id_usuario1=" + id_usuario + " OR chats.id_usuario2=" + id_usuario;
+        const viaje = "SELECT chats.id_chat, chats.id_viaje, viaje.origen, viaje.destino, viaje.fecha, chats.id_usuario1, chats.id_usuario2  FROM railway.chats JOIN viaje ON (chats.id_viaje=viaje.id_viaje) WHERE chats.id_usuario1=" + id_usuario + " OR chats.id_usuario2=" + id_usuario;
         connection.query(viaje, (err, result) => {
             if (err) reject(err)
             else resolve (result)
