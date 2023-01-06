@@ -92,4 +92,32 @@ const getUsuario = (id_usuario) => {
     })
 } 
 
-module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario };
+function postOpinion(request, response) {
+
+    let sql = `INSERT INTO opiniones (opinion, puntuacion, id_pasajero, id_viaje) VALUES (${request.body.opinion},${request.body.puntuacion}, ${request.body.pasajero},  ${request.body.id_viaje}) `;
+
+    connection.query(sql, function (err, result) {
+        if (err)
+            console.log(err);
+        else {
+            console.log(result);
+            response.send(result);
+        }
+    })
+}
+
+function postMediaPuntos(request, response) {
+    let sql = `SELECT AVG(puntuacion) FROM railway.opiniones JOIN railway.viaje ON (railway.opiniones.id_viaje = railway.viaje.id_viaje) JOIN railway.usuarios ON (railway.viaje.id_usuarios = railway.usuarios.id_usuario) WHERE id_usuario = ${request.body.id_usuario}`;
+    
+    let sql2 = `INSERT INTO usuarios (puntuacionMedia) VALUES (sql) WHERE id_usuario = ${request.body.id_usuario} `
+    connection.query(sql,sql2, function (err, result) {
+        if (err)
+            console.log(err);
+        else {
+            console.log(result);
+            response.send(result);
+        }
+    })
+}
+
+module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario ,postMediaPuntos, postOpinion}; 
