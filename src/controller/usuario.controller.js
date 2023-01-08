@@ -101,7 +101,7 @@ function postOpinion(request, response) {
             console.log(err);
         else {
             console.log(r);
-            sql = `SELECT AVG(puntuacion)  FROM railway.opiniones JOIN railway.viaje ON (railway.opiniones.id_viaje = railway.viaje.id_viaje) JOIN railway.usuarios ON (railway.viaje.id_usuarios = railway.usuarios.id_usuario) WHERE id_usuario = ${request.body.id_usuario}`;
+            sql = `SELECT AVG(puntuacion), id_usuarios  FROM railway.opiniones JOIN railway.viaje ON (railway.opiniones.id_viaje = railway.viaje.id_viaje) JOIN railway.usuarios ON (railway.viaje.id_usuarios = railway.usuarios.id_usuario) WHERE railway.viaje.id_viaje = ${request.body.id_viaje}`;
 
             connection.query(sql, function (err, result) {
                 if (err)
@@ -110,7 +110,7 @@ function postOpinion(request, response) {
                     console.log('---');
                     console.log(result);
                     console.log('---');
-                    sql = `UPDATE usuarios SET puntuacionMedia = ${parseFloat(result[0]['AVG(puntuacion)']) } WHERE id_usuario = ${request.body.id_usuario} `
+                    sql = `UPDATE usuarios SET puntuacionMedia = ${parseFloat(result[0]['AVG(puntuacion)']) } WHERE id_usuario = ${result[0].id_usuarios} `
                     connection.query(sql, function (err, result2) {
                         if (err)
                             console.log(err);
