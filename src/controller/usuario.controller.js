@@ -110,7 +110,7 @@ function postOpinion(request, response) {
                     console.log('---');
                     console.log(result);
                     console.log('---');
-                    sql = `UPDATE usuarios SET puntuacionMedia = ${result[0]['AVG(puntuacion)']} WHERE id_usuario = ${request.body.id_usuario} `
+                    sql = `UPDATE usuarios SET puntuacionMedia = ${result[0]} WHERE id_usuario = ${request.body.id_usuario} `
                     connection.query(sql, function (err, result2) {
                         if (err)
                             console.log(err);
