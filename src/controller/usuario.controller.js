@@ -3,12 +3,15 @@ const connection = require("../dataBase")
 
 function postRegistro(request, response) {
     console.log(request.body);
-    let sql = "INSERT INTO usuarios (nombre, apellidos , fechaDeNacimiento, email, password)" +
+    let fechaActual = new Date();
+    let fechaFormateada = fechaActual.toISOString().substring(0, 10);
+    let sql = "INSERT INTO usuarios (nombre, apellidos , fechaDeNacimiento, email, password, fechaDeAlta)" +
         " VALUES ('" + request.body.nombre + "', '" +
         request.body.apellidos + "' , '" +
         request.body.fechaDeNacimiento + "' , '" +
         request.body.email + "' , '" +
-        request.body.password + "')";
+        request.body.password + "' , '" +
+        fechaFormateada + "')";
 
     console.log(sql);
     connection.query(sql, function (err, result) {
