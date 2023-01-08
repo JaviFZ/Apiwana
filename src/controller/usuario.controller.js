@@ -77,47 +77,54 @@ function getPerfil(request, response) {
 
     if (request.query.id_usuario) {
         getUsuario(request.query.id_usuario)
-        .then((result) => response.send(result))
-        .catch(err => console.log(err));
+            .then((result) => response.send(result))
+            .catch(err => console.log(err));
     }
 }
 
 const getUsuario = (id_usuario) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         let sql = `SELECT * FROM railway.usuarios WHERE id_usuario=${id_usuario}`;
         connection.query(sql, function (err, result) {
             if (err) reject(err);
             else resolve(result);
         });
     })
-} 
+}
 
 function postOpinion(request, response) {
 
     let sql = `INSERT INTO opiniones (opinion, puntuacion, id_pasajero, id_viaje) VALUES ('${request.body.opinion}','${request.body.puntuacion}', '${request.body.id_pasajero}',  '${request.body.id_viaje}') `;
 
-    connection.query(sql, function (err, result) {
+    connection.query(sql, function (err, r) {
         if (err)
             console.log(err);
         else {
-            console.log(result);
-            response.send(result);
+            console.log(r);
+            sql = `SELECT AVG(puntuacion)  FROM railway.opiniones JOIN railway.viaje ON (railway.opiniones.id_viaje = railway.viaje.id_viaje) JOIN railway.usuarios ON (railway.viaje.id_usuarios = railway.usuarios.id_usuario) WHERE id_usuario = ${request.body.id_usuario}`;
+
+            connection.query(sql, function (err, result) {
+                if (err)
+                    console.log(err);
+                else {
+                    console.log('---');
+                    console.log(result);
+                    console.log('---');
+                    sql = `UPDATE usuarios SET puntuacionMedia = ${result[0]['AVG(puntuacion)']} WHERE id_usuario = ${request.body.id_usuario} `
+                    connection.query(sql, function (err, result2) {
+                        if (err)
+                            console.log(err);
+                        else {
+                            console.log(result2);
+                            response.send(result2);
+                        }
+                    })
+                }
+            })
         }
     })
 }
 
-function postMediaPuntos(request, response) {
-    let sql = `SELECT AVG(puntuacion) FROM railway.opiniones JOIN railway.viaje ON (railway.opiniones.id_viaje = railway.viaje.id_viaje) JOIN railway.usuarios ON (railway.viaje.id_usuarios = railway.usuarios.id_usuario) WHERE id_usuario = ${request.body.id_usuario}`;
-    
-    let sql2 = `INSERT INTO usuarios (puntuacionMedia) VALUES (sql) WHERE id_usuario = ${request.body.id_usuario} `
-    connection.query(sql,sql2, function (err, result) {
-        if (err)
-            console.log(err);
-        else {
-            console.log(result);
-            response.send(result);
-        }
-    })
-}
 
-module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario ,postMediaPuntos, postOpinion}; 
+
+module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion }; 
