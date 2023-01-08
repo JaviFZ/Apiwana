@@ -94,7 +94,7 @@ const getUsuario = (id_usuario) => {
 
 function postOpinion(request, response) {
 
-    let sql = `INSERT INTO opiniones (opinion, puntuacion, id_pasajero, id_viaje) VALUES (${request.body.opinion},${request.body.puntuacion}, ${request.body.pasajero},  ${request.body.id_viaje}) `;
+    let sql = `INSERT INTO opiniones (opinion, puntuacion, id_pasajero, id_viaje) VALUES ('${request.body.opinion}','${request.body.puntuacion}', '${request.body.id_pasajero}',  '${request.body.id_viaje}') `;
 
     connection.query(sql, function (err, result) {
         if (err)
