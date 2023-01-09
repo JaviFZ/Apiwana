@@ -129,5 +129,20 @@ function postOpinion(request, response) {
 }
 
 
+const getOpinion = (request, response) => {
+    let sql = "SELECT * FROM railway.opiniones JOIN railway.usuarios ON (railway.opiniones.id_pasajero=railway.usuarios.id_usuario) WHERE id_pasajero=" + request.query.id_pasajero;
+      console.log(sql);  
+      connection.query(sql, function (err, result) {
+          if (err) 
+              console.log(err);
+          else {
+              console.log(result)
+              response.send(result);
+          }
+      })
+  }
 
-module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion }; 
+
+
+
+module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion , getOpinion }; 
