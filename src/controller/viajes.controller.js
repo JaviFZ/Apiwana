@@ -20,7 +20,7 @@ function postViaje(request,response){
 
 function getViaje(request,response){
     console.log(request.query);
-    let sql = `SELECT foto,nombre,puntuacionMedia,origen,destino,fecha,precio,pasajeros,hora FROM usuarios 
+    let sql = `SELECT id_viaje,foto,nombre,puntuacionMedia,origen,destino,fecha,precio,pasajeros,hora FROM usuarios 
     JOIN viaje ON (usuarios.id_usuario = viaje.id_usuarios) 
     WHERE (viaje.codigoPostalOrigen='${request.query.codigoPostalOrigen}' AND viaje.CodigoPostalDestino='${request.query.codigoPostalDestino}' 
     AND viaje.fecha='${request.query.fecha}')`;
