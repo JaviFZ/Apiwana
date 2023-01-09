@@ -40,7 +40,7 @@ function getViaje(request,response){
 }
 
 function getTarjetaViaje(request, response) {
-    let sql = `SELECT * FROM viaje JOIN usuarios ON (viaje.id_usuarios=usuarios.id_usuario) JOIN coche ON (usuarios.id_usuario = coche.id_conductor) WHERE viaje.id_viaje=${request.query.id_viaje} AND coche.nombreCoche = viaje.id_coche `;
+    let sql = `SELECT * FROM viaje JOIN usuarios ON (viaje.id_usuarios=usuarios.id_usuario) JOIN coche ON (viaje.id_coche = coche.nombreCoche)  WHERE viaje.id_viaje=${request.query.id_viaje}`;
 
     connection.query(sql,function(err, result){
         if(err){
