@@ -20,7 +20,7 @@ function postViaje(request,response){
 
 function getViaje(request,response){
     console.log(request.query);
-    let sql = `SELECT foto,nombre,puntuacionMedia,origen,destino,fecha,precio,pasajeros,hora FROM usuarios 
+    let sql = `SELECT id_viaje,foto,nombre,puntuacionMedia,origen,destino,fecha,precio,pasajeros,hora FROM usuarios 
     JOIN viaje ON (usuarios.id_usuario = viaje.id_usuarios) 
     WHERE (viaje.codigoPostalOrigen='${request.query.codigoPostalOrigen}' AND viaje.CodigoPostalDestino='${request.query.codigoPostalDestino}' 
     AND viaje.fecha='${request.query.fecha}')`;
@@ -40,9 +40,7 @@ function getViaje(request,response){
 }
 
 function getTarjetaViaje(request, response) {
-    let sql = `SELECT foto, nombre, origen, destino, fecha, hora, precio, pasajeros, puntuacionMedia 
-    FROM viaje JOIN usuarios ON (viaje.id_usuarios=usuarios.id_usuario) 
-    WHERE viaje.id_usuarios=${request.query.id_usuarios} `;
+    let sql = `SELECT * FROM viaje JOIN usuarios ON (viaje.id_usuarios=usuarios.id_usuario) JOIN coche ON (viaje.id_coche = coche.nombreCoche)  WHERE viaje.id_viaje=${request.query.id_viaje}`;
 
     connection.query(sql,function(err, result){
         if(err){
