@@ -47,7 +47,7 @@ const getChat = (request, response) => {
             } else {
                 try {
                     const nuevoChat = await crearChat(request.body.id_usuario1, request.body.id_usuario2, request.body.id_viaje);
-                    await postPasajeros(request.body.id_viaje, request.body.id_usuario1);
+                    // await postPasajeros(request.body.id_viaje, request.body.id_usuario1);
                     const chatData = await getChatData(nuevoChat.insertId, request.body.id_usuario2);
                     response.send(chatData);
                 } catch (err) {

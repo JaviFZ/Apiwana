@@ -58,10 +58,9 @@ function getTarjetaViaje(request, response) {
 
 function getMisViajes(request,response){
     console.log(request.query);
-    let sql = `SELECT viaje.*, usuario.foto, usuario.nombre FROM railway.viaje
-     JOIN usuarios ON (viaje.id_usuarios=usuario.id_usuario) JOIN pasajero ON 
-     (viaje.id_viaje=pasajero.id_viaje) WHERE pasajero.id_pasajero=${request.query.id_pasajero} ;`;
-
+    let sql = `SELECT viaje.*, usuarios.foto, usuarios.nombre FROM railway.viaje
+    JOIN usuarios ON (viaje.id_usuarios=usuarios.id_usuario) JOIN chats ON 
+    (viaje.id_viaje=chats.id_viaje) WHERE chats.id_usuario1=${parseInt(request.query.id_pasajero)};`;
     connection.query(sql,function(err, result){
         if(err){
             console.log(err);
