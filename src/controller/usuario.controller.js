@@ -5,12 +5,14 @@ function postRegistro(request, response) {
     console.log(request.body);
     let fechaActual = new Date();
     let fechaFormateada = fechaActual.toISOString().substring(0, 10);
-    let sql = "INSERT INTO usuarios (nombre, apellidos , fechaDeNacimiento, email, password, fechaDeAlta)" +
+    let fotoHard = "../../../assets/img/iguana.png"
+    let sql = "INSERT INTO usuarios (nombre, apellidos , fechaDeNacimiento, email, password, fechaDeAlta , foto)" +
         " VALUES ('" + request.body.nombre + "', '" +
         request.body.apellidos + "' , '" +
         request.body.fechaDeNacimiento + "' , '" +
         request.body.email + "' , '" +
         request.body.password + "' , '" +
+        fotoHard +"')" +
         fechaFormateada + "')";
 
     console.log(sql);
