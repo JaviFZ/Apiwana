@@ -141,8 +141,21 @@ const getOpinion = (request, response) => {
           }
       })
   }
+  
+
+  function postPasajeros(request, response) {
+    let sql = "SELECT id_usuario1, foto FROM railway.chats join railway.usuarios ON (railway.chats.id_usuario1 = railway.usuarios.id_usuario) JOIN railway.viaje ON (railway.chats.id_usuario2 = railway.viaje.id_usuarios) WHERE viaje.id_viaje= " + request.body.id_viaje;
+      console.log(sql);  
+      connection.query(sql, function (err, result) {
+          if (err) 
+              console.log(err);
+          else {
+              console.log(result)
+              response.send(result);
+          }
+      })
+  }
 
 
 
-
-module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion , getOpinion }; 
+module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion , getOpinion, postPasajeros }; 
