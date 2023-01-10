@@ -131,18 +131,31 @@ function postOpinion(request, response) {
 
 const getOpinion = (request, response) => {
     let sql = "SELECT nombre , foto , opinion FROM railway.opiniones JOIN railway.usuarios ON (railway.opiniones.id_pasajero=railway.usuarios.id_usuario) WHERE id_conductor=" + request.query.id_usuario;
-    console.log(sql);
-    connection.query(sql, function (err, result) {
-        if (err)
-            console.log(err);
-        else {
-            console.log(result)
-            response.send(result);
-        }
-    })
-}
+      console.log(sql);  
+      connection.query(sql, function (err, result) {
+          if (err) 
+              console.log(err);
+          else {
+              console.log(result)
+              response.send(result);
+          }
+      })
+  }
+  
+
+  function postPasajeros(request, response) {
+    let sql = "SELECT id_usuario1, foto FROM railway.chats join railway.usuarios ON (railway.chats.id_usuario1 = railway.usuarios.id_usuario) JOIN railway.viaje ON (railway.chats.id_usuario2 = railway.viaje.id_usuarios) WHERE viaje.id_viaje= " + request.body.id_viaje;
+      console.log(sql);  
+      connection.query(sql, function (err, result) {
+          if (err) 
+              console.log(err);
+          else {
+              console.log(result)
+              response.send(result);
+          }
+      })
+  }
 
 
 
-
-module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion, getOpinion }; 
+module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion , getOpinion, postPasajeros }; 
