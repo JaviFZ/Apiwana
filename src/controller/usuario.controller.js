@@ -131,7 +131,6 @@ function postOpinion(request, response) {
 
 const getOpinion = (request, response) => {
     let sql = "SELECT nombre , foto , opinion FROM railway.opiniones JOIN railway.usuarios ON (railway.opiniones.id_pasajero=railway.usuarios.id_usuario) WHERE id_conductor=" + request.query.id_usuario;
-<<<<<<< HEAD
       console.log(sql);  
       connection.query(sql, function (err, result) {
           if (err) 
@@ -160,20 +159,3 @@ const getOpinion = (request, response) => {
 
 
 module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion , getOpinion, postPasajeros }; 
-=======
-    console.log(sql);
-    connection.query(sql, function (err, result) {
-        if (err)
-            console.log(err);
-        else {
-            console.log(result)
-            response.send(result);
-        }
-    })
-}
-
-
-
-
-module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion, getOpinion }; 
->>>>>>> 1b0094a5481280e9a5ae66a0d0e8b65a1c911a00
