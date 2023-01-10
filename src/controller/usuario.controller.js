@@ -50,7 +50,7 @@ function postLogin(request, response) {
 function putPerfil(request, response) {
     console.log(request.body);
 
-    let params = [request.body.email, request.body.nombre, request.body.apellidos, request.body.direccion, request.body.telefono, request.body.genero, request.body.fechaDeNacimiento, request.body.foto, request.body.sobreMi, request.body.id_usuario]
+    let params = [request.body.email, request.body.nombre, request.body.apellidos, request.body.direccion, request.body.telefono, request.body.genero, request.body.fechaDeNacimiento, request.body.foto,request.body.tiempoDeEspera, request.body.sobreMi, request.body.id_usuario]
 
     let sql = "UPDATE usuarios SET email = COALESCE(?, email) , " +
         "nombre = COALESCE(?, nombre) , " +
@@ -60,6 +60,7 @@ function putPerfil(request, response) {
         "genero = COALESCE(?, genero) , " +
         "fechaDeNacimiento = COALESCE(?, fechaDeNacimiento) , " +
         "foto = COALESCE(?, foto) , " +
+        "tiempoDeEspera = COALESCE(?, tiempoDeEspera) , " +
         "sobreMi = COALESCE(?, sobreMi)  WHERE id_usuario = ?";
 
     console.log(sql);
