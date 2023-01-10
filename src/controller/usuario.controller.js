@@ -5,14 +5,12 @@ function postRegistro(request, response) {
     console.log(request.body);
     let fechaActual = new Date();
     let fechaFormateada = fechaActual.toISOString().substring(0, 10);
-    let fotoHard = "../../../assets/img/iguana.png"
-    let sql = "INSERT INTO usuarios (nombre, apellidos , fechaDeNacimiento, email, password, fechaDeAlta , foto)" +
+    let sql = "INSERT INTO usuarios (nombre, apellidos , fechaDeNacimiento, email, password, fechaDeAlta)" +
         " VALUES ('" + request.body.nombre + "', '" +
         request.body.apellidos + "' , '" +
         request.body.fechaDeNacimiento + "' , '" +
         request.body.email + "' , '" +
         request.body.password + "' , '" +
-        fotoHard +"')" +
         fechaFormateada + "')";
 
     console.log(sql);
@@ -115,7 +113,7 @@ function postOpinion(request, response) {
                     console.log('---');
                     console.log(result);
                     console.log('---');
-                    sql = `UPDATE usuarios SET puntuacionMedia = ${parseFloat(result[0]['AVG(puntuacion)']) } WHERE id_usuario = ${result[0].id_usuarios} `
+                    sql = `UPDATE usuarios SET puntuacionMedia = ${parseFloat(result[0]['AVG(puntuacion)'])} WHERE id_usuario = ${result[0].id_usuarios} `
                     connection.query(sql, function (err, result2) {
                         if (err)
                             console.log(err);
@@ -133,18 +131,18 @@ function postOpinion(request, response) {
 
 const getOpinion = (request, response) => {
     let sql = "SELECT nombre , foto , opinion FROM railway.opiniones JOIN railway.usuarios ON (railway.opiniones.id_pasajero=railway.usuarios.id_usuario) WHERE id_conductor=" + request.query.id_usuario;
-      console.log(sql);  
-      connection.query(sql, function (err, result) {
-          if (err) 
-              console.log(err);
-          else {
-              console.log(result)
-              response.send(result);
-          }
-      })
-  }
+    console.log(sql);
+    connection.query(sql, function (err, result) {
+        if (err)
+            console.log(err);
+        else {
+            console.log(result)
+            response.send(result);
+        }
+    })
+}
 
 
 
 
-module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion , getOpinion }; 
+module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion, getOpinion }; 
