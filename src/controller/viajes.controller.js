@@ -56,7 +56,8 @@ function getTarjetaViaje(request, response) {
     })
 }
 
-function getMisViajes(request,response){
+async function getMisViajes(request,response){
+    await checkViajes();
     console.log(request.query);
     let sql = `SELECT viaje.*, usuarios.foto, usuarios.nombre FROM railway.viaje
     JOIN usuarios ON (viaje.id_usuarios=usuarios.id_usuario) JOIN chats ON 
@@ -106,5 +107,15 @@ function postPasajeros(request, response) {
       })
   }
 
+const checkViajes=()=>{
+    return new Promise(function(resolve, reject) {
+        let sql = "UPDATE viaje SET activo = 0 WHERE fecha < current_date()"
+    connection.query(sql, (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+    });
+    })
+    
+}
 
 module.exports = {postViaje, getViaje, getTarjetaViaje, getMisViajes, getMisViajesPublicados, postPasajeros}
