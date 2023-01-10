@@ -50,7 +50,7 @@ function postLogin(request, response) {
 function putPerfil(request, response) {
     console.log(request.body);
 
-    let params = [request.body.email, request.body.nombre, request.body.apellidos, request.body.direccion, request.body.telefono, request.body.genero, request.body.fechaDeNacimiento, request.body.foto, request.body.sobreMi, request.body.id_usuario]
+    let params = [request.body.email, request.body.nombre, request.body.apellidos, request.body.direccion, request.body.telefono, request.body.genero, request.body.fechaDeNacimiento, request.body.foto,request.body.tiempoDeEspera, request.body.sobreMi, request.body.id_usuario]
 
     let sql = "UPDATE usuarios SET email = COALESCE(?, email) , " +
         "nombre = COALESCE(?, nombre) , " +
@@ -60,6 +60,7 @@ function putPerfil(request, response) {
         "genero = COALESCE(?, genero) , " +
         "fechaDeNacimiento = COALESCE(?, fechaDeNacimiento) , " +
         "foto = COALESCE(?, foto) , " +
+        "tiempoDeEspera = COALESCE(?, tiempoDeEspera) , " +
         "sobreMi = COALESCE(?, sobreMi)  WHERE id_usuario = ?";
 
     console.log(sql);
@@ -143,19 +144,7 @@ const getOpinion = (request, response) => {
   }
   
 
-  function postPasajeros(request, response) {
-    let sql = "SELECT id_usuario1, foto FROM railway.chats join railway.usuarios ON (railway.chats.id_usuario1 = railway.usuarios.id_usuario) JOIN railway.viaje ON (railway.chats.id_usuario2 = railway.viaje.id_usuarios) WHERE viaje.id_viaje= " + request.body.id_viaje;
-      console.log(sql);  
-      connection.query(sql, function (err, result) {
-          if (err) 
-              console.log(err);
-          else {
-              console.log(result)
-              response.send(result);
-          }
-      })
-  }
 
 
 
-module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion , getOpinion, postPasajeros }; 
+module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion , getOpinion }; 
