@@ -55,4 +55,25 @@ function getTarjetaViaje(request, response) {
         }
     })
 }
-module.exports = {postViaje, getViaje, getTarjetaViaje}
+
+function getMisViajes(request,response){
+    console.log(request.query);
+    let sql = `SELECT viaje.*, usuarios.foto, usuarios.nombre FROM railway.viaje
+    JOIN usuarios ON (viaje.id_usuarios=usuarios.id_usuario) JOIN chats ON 
+    (viaje.id_viaje=chats.id_viaje) WHERE chats.id_usuario1=${parseInt(request.query.id_pasajero)};`;
+    connection.query(sql,function(err, result){
+        if(err){
+            console.log(err);
+        }else{
+            console.log(result);
+            if(result){
+                response.send(result);
+            }else{
+                response.send("-1");
+            }
+        }
+    })
+}
+
+
+module.exports = {postViaje, getViaje, getTarjetaViaje, getMisViajes}
