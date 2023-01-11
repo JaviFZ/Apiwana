@@ -94,7 +94,7 @@ function getMisViajesPublicados(request,response){
     })
 }
 function getPasajeros(request, response) {
-    let sql = "SELECT foto, nombre,id_usuario1 FROM railway.usuarios join railway.chats ON (railway.usuarios.id_usuario = railway.chats.id_usuario1) WHERE chats.id_viaje= " + request.query.id_viaje;
+    let sql = "SELECT foto, nombre,id_usuario1 FROM railway.usuarios join railway.chats ON (railway.usuarios.id_usuario = railway.chats.id_usuario1) WHERE chats.id_viaje= " + request.body.id_viaje;
       console.log(sql);  
       connection.query(sql, function (err, result) {
           if (err) 
