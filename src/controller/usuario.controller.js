@@ -142,9 +142,25 @@ const getOpinion = (request, response) => {
           }
       })
   }
+
+
+
+
+  const getInfoOtherUser = (request , response) => {
+    let sql = "SELECT * FROM railway.usuarios JOIN railway.coche ON (railway.usuario.id_usuario=railway.coche.id_conductor) JOIN railway.opiniones ON (railway.opiniones.id_opinion=railway.usuarios.id_usuario) WHERE id_usuario = " + request.query.id_del_usuario_deseado ; 
+    console.log(sql);  
+    connection.query(sql, function (err, result) {
+        if (err) 
+            console.log(err);
+        else {
+            console.log(result)
+            response.send(result);
+        }
+    })
+  }
   
 
 
 
 
-module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion , getOpinion }; 
+module.exports = { postRegistro, postLogin, putPerfil, getPerfil, getUsuario, postOpinion , getOpinion , getInfoOtherUser }; 
