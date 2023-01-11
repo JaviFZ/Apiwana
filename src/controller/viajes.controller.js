@@ -78,8 +78,26 @@ async function getMisViajes(request,response){
 
 function getMisViajesPublicados(request,response){
     console.log(request.query);
+    let sql = `SELECT viaje.*, usuarios.foto, usuarios.nombre FROM railway.viaje
+    JOIN usuarios ON (viaje.id_usuarios=usuarios.id_usuario) WHERE viaje.id_usuarios=${request.query.id_usuario};`;
+    connection.query(sql,function(err, result){
+        if(err){
+            console.log(err);
+        }else{
+            console.log(result);
+            if(result){
+                response.send(result);
+            }else{
+                response.send("-1");
+            }
+        }
+    })
+}
+
+function getpasajeros(request,response){
+    console.log(request.query);
    
-    let sql = `SELECT * FROM railway.usuarios join railway.chats ON (railway.usuarios.id_usuario = railway.chats.id_usuario1)WHERE chats.id_usuario2=${request.query.id_usuario} AND chats.id_usuario1 != ${request.query.id_usuario}`;
+    let sql = `SELECT * FROM railway.usuarios join railway.chats ON (railway.usuarios.id_usuario = railway.chats.id_usuario1)WHERE chats.id_usuario2=${request.query.id_usuario} `;
     connection.query(sql,function(err, result){
         if(err){
             console.log(err);
@@ -96,18 +114,6 @@ function getMisViajesPublicados(request,response){
         }
     })
 }
-// function getPasajeros(request, response) {
-//     let sql = "SELECT foto, nombre,id_usuario1 FROM railway.usuarios join railway.chats ON (railway.usuarios.id_usuario = railway.chats.id_usuario1) WHERE chats.id_viaje= " + request.body.id_viaje;
-//       console.log(sql);  
-//       connection.query(sql, function (err, result) {
-//           if (err) 
-//               console.log(err);
-//           else {
-//               console.log(result)
-//               response.send(result);
-//           }
-//       })
-//   }
 
 const checkViajes=()=>{
     return new Promise(function(resolve, reject) {
@@ -120,4 +126,4 @@ const checkViajes=()=>{
     
 }
 
-module.exports = {postViaje, getViaje, getTarjetaViaje, getMisViajes, getMisViajesPublicados}
+module.exports = {postViaje, getViaje, getTarjetaViaje, getMisViajes, getMisViajesPublicados, getpasajeros}
