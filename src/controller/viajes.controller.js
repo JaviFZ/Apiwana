@@ -118,4 +118,34 @@ const checkViajes=()=>{
     
 }
 
-module.exports = {postViaje, getViaje, getTarjetaViaje, getMisViajes, getMisViajesPublicados, getPasajeros}
+const deleteViajePublicado = (request, response) =>{
+    console.log(request.body);
+    let sql = `DELETE FROM viaje WHERE id_viaje=${request.body.id_viaje} `;
+    console.log(sql); 
+    connection.query(sql, (err, result) => {
+        if (err) 
+            console.log(err);
+        else 
+        {
+            response.send(result);
+        }
+    })
+}
+
+const deleteViajePasajero = (request, response) =>{
+    console.log(request.body);
+    let sql = `DELETE FROM chats WHERE id_chat=${request.body.id_chat} `;
+    console.log(sql); 
+    connection.query(sql, (err, result) => {
+        if (err) 
+            console.log(err);
+        else 
+        {
+            response.send(result);
+        }
+    })
+}
+
+
+
+module.exports = {postViaje, getViaje, getTarjetaViaje, getMisViajes, getMisViajesPublicados, getPasajeros, deleteViajePasajero, deleteViajePublicado}
