@@ -78,7 +78,7 @@ async function getMisViajes(request,response){
 
 function getMisViajesPublicados(request,response){
     console.log(request.query);
-    let sql = `SELECT viaje.*, usuarios.foto, usuarios.nombre FROM railway.viaje
+    let sql = `SELECT viaje.* FROM railway.viaje
     JOIN usuarios ON (viaje.id_usuarios=usuarios.id_usuario) WHERE viaje.id_usuarios=${request.query.id_usuario};`;
     connection.query(sql,function(err, result){
         if(err){
