@@ -16,6 +16,8 @@ router.put("/editarPerfil", usuarioCtrl.putPerfil);
 
 router.get("/perfil", usuarioCtrl.getPerfil);
 
+router.get("/otroPerfil", usuarioCtrl.getInfoOtherUser);
+
 
 
 
