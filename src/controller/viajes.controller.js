@@ -93,8 +93,8 @@ function getMisViajesPublicados(request,response){
         }
     })
 }
-function postPasajeros(request, response) {
-    let sql = "SELECT foto, nombre,id_usuario1 FROM railway.usuarios join railway.chats ON (railway.usuarios.id_usuario = railway.chats.id_usuario1) WHERE chats.id_viaje= " + request.body.id_viaje;
+function getPasajeros(request, response) {
+    let sql = "SELECT foto, nombre,id_usuario1 FROM railway.usuarios join railway.chats ON (railway.usuarios.id_usuario = railway.chats.id_usuario1) WHERE chats.id_viaje= " + request.query.id_viaje;
       console.log(sql);  
       connection.query(sql, function (err, result) {
           if (err) 
@@ -117,4 +117,4 @@ const checkViajes=()=>{
     
 }
 
-module.exports = {postViaje, getViaje, getTarjetaViaje, getMisViajes, getMisViajesPublicados, postPasajeros}
+module.exports = {postViaje, getViaje, getTarjetaViaje, getMisViajes, getMisViajesPublicados, getPasajeros}

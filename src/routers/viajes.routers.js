@@ -6,7 +6,6 @@ router.post("/viajes",viajesCtrl.postViaje);
 router.get("/viajes",viajesCtrl.getViaje);
 router.get("/misViajes",viajesCtrl.getMisViajes);
 router.get("/viaje",viajesCtrl.getTarjetaViaje);
-router.get("/viajesPublicados",viajesCtrl.getMisViajesPublicados);
-router.post("/viajesPublicados",viajesCtrl.postPasajeros);
+router.get("/viajesPublicados",viajesCtrl.getMisViajesPublicados, viajesCtrl.getPasajeros);
 
 module.exports = router;
