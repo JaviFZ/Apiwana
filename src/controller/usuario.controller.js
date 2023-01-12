@@ -131,7 +131,7 @@ function postOpinion(request, response) {
 
 
 const getOpinion = (request, response) => {
-    let sql = "SELECT * FROM railway.opiniones JOIN railway.usuarios ON (railway.opiniones.id_pasajero=railway.usuarios.id_usuario) WHERE id_conductor=" + request.query.id_usuario;
+    let sql = "SELECT nombre , foto , opinion, puntuacion FROM railway.opiniones JOIN railway.usuarios ON (railway.opiniones.id_pasajero=railway.usuarios.id_usuario) WHERE id_conductor=" + request.query.id_usuario;
       console.log(sql);  
       connection.query(sql, function (err, result) {
           if (err) 
