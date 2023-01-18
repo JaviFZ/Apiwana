@@ -23,7 +23,7 @@ function getViaje(request,response){
     let sql = `SELECT id_viaje,foto,nombre,puntuacionMedia,origen,destino,fecha,precio,pasajeros,hora FROM usuarios 
     JOIN viaje ON (usuarios.id_usuario = viaje.id_usuarios) 
     WHERE (viaje.codigoPostalOrigen='${request.query.codigoPostalOrigen}' AND viaje.CodigoPostalDestino='${request.query.codigoPostalDestino}' 
-    AND viaje.fecha='${request.query.fecha}')`;
+    AND viaje.fecha='${request.query.fecha}' AND viaje.pasajeros>=${request.query.pasajeros})`;
 
     connection.query(sql,function(err, result){
         if(err){
