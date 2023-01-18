@@ -4,7 +4,7 @@ const connection = require("../dataBase")
 function postRegistro(request, response) {
     let fechaActual = new Date();
     let fechaFormateada = fechaActual.toISOString().substring(0, 10);
-    let sql = `SELECT * FROM usuarios WHERE email='${request.body.email}'`
+    let sql = `SELECT * FROM usuarios WHERE email='${request.query.email}'`
     connection.query(sql, function (err, result) {
         if (err)
             console.log(err);
@@ -31,7 +31,6 @@ function postRegistro(request, response) {
                 }
             })
             }else {
-                console.log(result);
                 response.send("Este email ya está registrado");
             }
         }
