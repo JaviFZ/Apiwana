@@ -31,7 +31,7 @@ function postRegistro(request, response) {
                 }
             })
             }else {
-                response.send("este email ya está registrado");
+                response.send({message:"este email ya está registrado"});
             }
         }
     })
