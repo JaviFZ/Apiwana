@@ -2,30 +2,62 @@ const connection = require("../dataBase")
 
 
 function postRegistro(request, response) {
-    console.log(request.body);
     let fechaActual = new Date();
     let fechaFormateada = fechaActual.toISOString().substring(0, 10);
-    let sql = "INSERT INTO usuarios (nombre, apellidos , fechaDeNacimiento, email, password, fechaDeAlta)" +
-        " VALUES ('" + request.body.nombre + "', '" +
-        request.body.apellidos + "' , '" +
-        request.body.fechaDeNacimiento + "' , '" +
-        request.body.email + "' , '" +
-        request.body.password + "' , '" +
-        fechaFormateada + "')";
-
-    console.log(sql);
+    let sql = `SELECT * FROM usuarios WHERE email='${request.body.email}'`
     connection.query(sql, function (err, result) {
         if (err)
             console.log(err);
         else {
             console.log(result);
-            if (result.insertId)
-                response.send(String(result.insertId));
-            else {
-                response.send("-1");
+            if (result==[]){
+            let sql2 = "INSERT INTO usuarios (nombre, apellidos , fechaDeNacimiento, email, password, fechaDeAlta)" +
+            " VALUES ('" + request.body.nombre + "', '" +
+            request.body.apellidos + "' , '" +
+            request.body.fechaDeNacimiento + "' , '" +
+            request.body.email + "' , '" +
+            request.body.password + "' , '" +
+            fechaFormateada + "')";
+            connection.query(sql2, function (err, result) {
+                if (err)
+                    console.log(err);
+                else {
+                    console.log(result);
+                    if (result.insertId)
+                        response.send(String(result.insertId));
+                    else {
+                        response.send("-1");
+                    }
+                }
+            })
+            }else {
+                response.send("Este email ya está registrado");
             }
         }
     })
+    // console.log(request.body);
+    
+    // let sql2 = "INSERT INTO usuarios (nombre, apellidos , fechaDeNacimiento, email, password, fechaDeAlta)" +
+    //     " VALUES ('" + request.body.nombre + "', '" +
+    //     request.body.apellidos + "' , '" +
+    //     request.body.fechaDeNacimiento + "' , '" +
+    //     request.body.email + "' , '" +
+    //     request.body.password + "' , '" +
+    //     fechaFormateada + "')";
+
+    // console.log(sql2);
+    // connection.query(sql2, function (err, result) {
+    //     if (err)
+    //         console.log(err);
+    //     else {
+    //         console.log(result);
+    //         if (result.insertId)
+    //             response.send(String(result.insertId));
+    //         else {
+    //             response.send("-1");
+    //         }
+    //     }
+    // })
 }
 
 function postLogin(request, response) {
