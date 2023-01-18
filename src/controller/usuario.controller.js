@@ -10,7 +10,7 @@ function postRegistro(request, response) {
             console.log(err);
         else {
             console.log(result);
-            if (result){
+            if (!result){
             let sql2 = "INSERT INTO usuarios (nombre, apellidos , fechaDeNacimiento, email, password, fechaDeAlta)" +
             " VALUES ('" + request.body.nombre + "', '" +
             request.body.apellidos + "' , '" +
