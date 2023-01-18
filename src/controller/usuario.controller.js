@@ -6,6 +6,7 @@ function postRegistro(request, response) {
     let fechaFormateada = fechaActual.toISOString().substring(0, 10);
     let sql = `SELECT * FROM usuarios WHERE email='${request.query.email}'`
     connection.query(sql, function (err, result) {
+        console.log(result);
         if (err)
             console.log(err);
         else {
@@ -19,6 +20,7 @@ function postRegistro(request, response) {
             request.body.password + "' , '" +
             fechaFormateada + "')";
             connection.query(sql2, function (err, result) {
+                console.log(result);
                 if (err)
                     console.log(err);
                 else {
