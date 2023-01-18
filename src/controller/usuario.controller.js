@@ -4,14 +4,14 @@ const connection = require("../dataBase")
 function postRegistro(request, response) {
     let fechaActual = new Date();
     let fechaFormateada = fechaActual.toISOString().substring(0, 10);
-    let sql = `SELECT * FROM usuarios WHERE email='${request.query.email}'`
+    let sql = `SELECT email FROM usuarios`
     connection.query(sql, function (err, result) {
         console.log(result);
         if (err)
             console.log(err);
         else {
             console.log(result);
-            if (result){
+            if (!result.includes(request.body.email)){
             let sql2 = "INSERT INTO usuarios (nombre, apellidos , fechaDeNacimiento, email, password, fechaDeAlta)" +
             " VALUES ('" + request.body.nombre + "', '" +
             request.body.apellidos + "' , '" +
